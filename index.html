@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Assignment 2</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- google fonts -->
+        <link rel="preconnect" href="https://fonts.gstatic.com"> 
+        <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300;400;500&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Rokkitt:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <!-- d3.js -->
+        <script src="https://d3js.org/d3.v4.js"></script>
+        <!-- My files -->
+        <link href="main.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- take note that the dataset only has values for victims 21 years and under -->
+        <h1>Number of Victims 21 & Under of Some Major Crimes in Singapore (2011-2019)</h1>
+
+        <div class='boundBox' class='flexContainer' id='intro_text'>
+            <p class='writtenText'> 
+                Singapore is known to be a pretty safe city, but that does not mean everyone is safe from the crimes committed against them. <br>
+                In this data viz, I show the total number of victims aged 21 & below in selected major offences committed between 2011 & 2019. <br>
+                Use the buttons to navigate between the selected major offences.
+            </p>
+            <p>
+                please note that this exercise is purely exploratory; any conclusions made here are soley based on what has been interpreted from the visualised data! :-)<br>
+                dataset was cleaned and processed using pandas [python in jupyter notebook] to extract victims aged 21 and under.<br>
+                <i>original data source: <a href="https://data.gov.sg/dataset/victims-of-selected-major-selected-offences?resource_id=50ce8b97-6f2e-4a0c-95b4-2477ab281846">data.gov.sg</a></i>
+            </p>
+        </div>
+
+
+        <div class='boundBox' id='my_chart'>
+            <!-- Add 8 buttons for each crime type -->
+            <div class = 'flexContainer'>
+                <button class="button button1" onclick="update('total_murder')">Murder</button>
+                <button class= "button button2" onclick="update('total_rape')">Rape</button>
+                <button class= "button button3" onclick="update('total_outrage_modesty')">Outrage of Modesty</button>
+                <button class= "button button4" onclick="update('total_robbery')">Robbery</button> 
+                <button class= "button button5" onclick="update('total_snatch_theft')">Snatch Theft</button> 
+                <button class= "button button6" onclick="update('total_rioting')">Rioting</button> 
+                <button class= "button button7" onclick="update('total_serious_hurt')">Serious Hurt</button> 
+                <button class= "button button8" onclick="update('total_cheating_related')">Cheating & Related</button>  
+            </div>
+            <br>
+            <!-- 
+                show the total num of victims by crime_type, repeat for each crime_type, per year.  
+                x-axis: year; y-axis: num_people; fill: crime_type (change the colour to match the button colour)
+            -->
+            <div class='flexContainer' id='data_viz'>
+                <script>
+                    // set the dimensions and margins of the graph
+                    var margin = {top: 30, right: 30, bottom: 70, left: 60},
+                        width = 760 - margin.left - margin.right,
+                        height = 450 - margin.top - margin.bottom;
+
+                    // append the svg object to the body of the page
+                    var svg = d3.select("#data_viz")
+                    .append("svg")
+                        .attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                        .attr("transform",
+                            "translate(" + margin.left + "," + margin.top + ")");
+
+                    // Initialize the X axis
+                    var x = d3.scaleBand()
+                    .range([ 0, width ])
+                    .padding(0.2);
+                    var xAxis = svg.append("g")
+                    .attr("transform", "translate(0," + height + ")")
+
+                    // Initialize the Y axis
+                    var y = d3.scaleLinear()
+                    .range([ height, 0]);
+                    var yAxis = svg.append("g")
+                    .attr("class", "myYaxis")
+
+                    // A function that create / update the plot for a given variable:
+                    function update(selectedVar) {
+
+                    // Parse the Data
+                    d3.csv("pivot_total_victims_under21.csv", function(data) {
+
+                    // X axis
+                    x.domain(data.map(function(d) { return d.year; }))
+                    xAxis.transition().duration(1000).call(d3.axisBottom(x))
+
+                    // Add Y axis
+                    y.domain([0, d3.max(data, function(d) { return +d[selectedVar] }) ]);
+                    yAxis.transition().duration(1000).call(d3.axisLeft(y));
+                    
+                    // variable u: map data to existing bars
+                    var u = svg.selectAll("rect")
+                    .data(data)
+
+                    // update bars
+                    u
+                    .enter()
+                    .append("rect")
+                    .merge(u)
+                    .transition()
+                    .duration(1000)
+                        .attr("x", function(d) { return x(d.year); })
+                        .attr("y", function(d) { return y(d[selectedVar]); })
+                        .attr("width", x.bandwidth())
+                        .attr("height", function(d) { return height - y(d[selectedVar]); })
+                        .attr("fill", function(d) {
+                            if (selectedVar == 'total_murder') {
+                                return "#66363C";
+                            } else if (selectedVar == 'total_rape') {
+                                return "#ebabb3";
+                            } else if (selectedVar == 'total_outrage_modesty') {
+                                return "#CC4959"
+                            } else if (selectedVar == 'total_robbery') {
+                                return "#93AD66"
+                            } else if (selectedVar == 'total_snatch_theft') {
+                                return "#3FAB9E"
+                            } else if (selectedVar == 'total_rioting') {
+                                return "#505744"
+                            } else if (selectedVar == 'total_serious_hurt') {
+                                return "#868884"
+                            } else if (selectedVar == 'total_cheating_related'){
+                                return "#8E7EA3"
+                            }
+                            return "black"
+                            })
+                    })
+                }
+                    // Initialize plot
+                    update('total_murder')
+                </script>   
+            </div> 
+        </div>
+
+        <div class='boundBox' class='flexContainer' id='end_text'>
+            <p class='writtenText'>
+                As seen in the above graphs, the number of victims aged 21 and under for <b>cheating & related</b>, <b>rape</b>, and to a small extent, <b>outrage of modesty</b>, have been on the rise from 2011 to 2019. 
+                In contrast, crimes like <b>robbery</b>, <b>snatch theft</b>, and <b>rioting</b> saw a decreasing trend from 2011 to 2019. 
+                <br>
+                <br>
+                Crimes like <b>outrage of modesty</b> and <b>cheating & related</b> have remained relatively high over the years. The former remains above 1000 victims aged 21 and under in all years, while the latter grew exponentially over the years - reaching its peak in 2019! :-O 
+                This highlights that these two particular crimes are infamously more common... :-( 
+                <br>
+                <br>
+                While minimising the number of victims for all sorts of crime is paramount, this visualisation suggests that perhaps more resources can be directed towards trying to minimise the worrying growth of victims aged 21 and under of <b>outrage of modesty</b>.
+            </p>
+            <p>p.s.: the number of victims of murder, albeit still under 5, seems to be on a rising trend from 2018 onwards... something to ponder upon? </p>
+        </div>
+    </body>
+
+</html>

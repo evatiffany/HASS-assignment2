@@ -1,0 +1,168 @@
+/* this is the stylesheet, add the styles later */
+
+/* font-family: 'Kiwi Maru', serif;
+font-family: 'Nunito', sans-serif;
+font-family: 'Rokkitt', serif; */
+
+body {
+    background-color: rgb(29, 75, 104);
+}
+
+h1 {
+    width: 850px;
+    padding: 30px;
+    margin: auto;
+    font-family: 'Rokkitt', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+}
+
+p {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 200;
+    font-size: rem;
+    color:rgb(184, 61, 61);
+    text-align:center;
+}
+
+b {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    color: teal;
+}
+
+.writtenText {
+    font-family: 'Nunito', sans-serif;
+    font-weight:500;
+    font-size: 20px;
+    text-align: center;
+    color:rgb(19, 7, 7);
+}
+
+.boundBox {
+    width: 800px;
+    background-color:white;
+    opacity: 93%;
+    border: 5px solid rgb(14, 50, 72);
+    padding-left: 65px;
+    padding-right: 65px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin: auto; 
+    margin-bottom: 15px;
+    border-radius: 40px; 
+}
+
+/* this class justifies elements in the flex container to the center of the page */
+.flexContainer {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* buttons */
+.button {
+    background-color: white; 
+    border: none;
+    color: rgb(14, 50, 72);
+    padding: 6px 20px;
+    text-align: center;
+    display: inline-flexbox;
+    font-size: 14px;
+    font-family: 'Nunito', sans-serif;
+    margin: 4px 2px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+
+.button1 {
+    background-color: white; 
+    color: #66363C; 
+    border: 2px solid #66363C;
+}
+  
+.button1:hover {
+    background-color: #66363C;
+    color: white;
+}
+  
+.button2 {
+    background-color: white; 
+    color: #ebabb3; 
+    border: 2px solid #ebabb3;
+}
+  
+.button2:hover {
+    background-color: #ebabb3;
+    color: white;
+}
+  
+.button3 {
+    background-color: white; 
+    color: #CC4959; 
+    border: 2px solid #CC4959;
+}
+  
+.button3:hover {
+    background-color: #CC4959;
+    color: white;
+}
+
+.button4 {
+    background-color: white; 
+    color: #93AD66; 
+    border: 2px solid #93AD66;
+}
+
+.button4:hover {
+    background-color: #93AD66;
+    color: white;
+}
+
+.button5 {
+    background-color: white; 
+    color: #3FAB9E; 
+    border: 2px solid #3FAB9E;
+}
+
+.button5:hover {
+    background-color: #3FAB9E;
+    color: white;
+}
+
+.button6 {
+    background-color: white; 
+    color: #505744; 
+    border: 2px solid #505744;
+}
+
+.button6:hover {
+    background-color: #505744;
+    color: white;
+}
+
+.button7 {
+    background-color: white; 
+    color: #868884; 
+    border: 2px solid #868884;
+}
+
+.button7:hover {
+    background-color:#868884;
+    color: white;
+}
+
+.button8 {
+    background-color: white; 
+    color: #8E7EA3; 
+    border: 2px solid #8E7EA3;
+}
+
+.button8:hover {
+    background-color: #8E7EA3;
+    color: white;
+}
+
